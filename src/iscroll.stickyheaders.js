@@ -41,6 +41,8 @@
             var i, ii,
                 elms = this.iscroll.scroller.querySelectorAll(this.selector);
 
+            this.headers = [];
+
             for (i = 0, ii = elms.length; i < ii; i++) {
                 var header = {
                         elm: elms[i],
