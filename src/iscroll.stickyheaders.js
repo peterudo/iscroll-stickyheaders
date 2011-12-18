@@ -84,11 +84,7 @@
                     translateY = header.maxY;
                 }
 
-<<<<<<< HEAD
-                header.elm.style[vendor + 'Transform'] = 'translate3d(0, ' + translateY + 'px, 0)';
-=======
                 header.elm.style[vendor + 'Transform'] = trnOpen + ('0, ' + translateY + 'px') + trnClose;
->>>>>>> master
             }
         },
 
