@@ -1,0 +1,38 @@
+body {
+    background: url(bg_respatex_tile.png);
+    margin: 0;
+    padding: 0;
+    font-family: Helvetica, Arial;
+}
+
+ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.list ul > li {
+    padding: 10px;
+    border-top: 1px solid #AAA;
+}
+
+.list ul {
+    background: rgb(240, 240, 240);
+}
+
+h1 {
+    background: -webkit-linear-gradient(top, #333 0%, #2E2E2E 100%);
+    border-top: 1px solid #404040;
+    border-bottom: 1px solid #1A1A1A;
+    color: #EEE;
+    padding: 0 10px;
+    margin: 0;
+    opacity: .8;
+}
+
+#scroll {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+}
