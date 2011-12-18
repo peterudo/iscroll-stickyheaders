@@ -2,10 +2,15 @@
 
     var _transitionTime = iScroll.prototype._transitionTime,
         _pos = iScroll.prototype._pos,
+        m = Math,
+
+        // Hoping iscroll gets easier to extend, so this can be skipped.
         vendor = (/webkit/i).test(navigator.appVersion) ? 'webkit' :
                 (/firefox/i).test(navigator.userAgent) ? 'Moz' :
                 'opera' in window ? 'O' : '',
-        m = Math;
+        has3d = 'WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix(),
+        trnOpen = 'translate' + (has3d ? '3d(' : '('),
+        trnClose = has3d ? ',0)' : ')';
     
     iScroll.prototype.enableStickyHeaders = function (selector) {
         return new iScrollStickyHeaders(this, selector);
@@ -79,7 +84,11 @@
                     translateY = header.maxY;
                 }
 
+<<<<<<< HEAD
                 header.elm.style[vendor + 'Transform'] = 'translate3d(0, ' + translateY + 'px, 0)';
+=======
+                header.elm.style[vendor + 'Transform'] = trnOpen + ('0, ' + translateY + 'px') + trnClose;
+>>>>>>> master
             }
         },
 
