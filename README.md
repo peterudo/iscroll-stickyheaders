@@ -4,7 +4,10 @@ iScroll sticky headers
 Plugin for [iScroll](http://cubiq.org/iscroll-4) that adds support for sticky headers.
 
 
-## Usage
+## Example and usage
+Working demo: http://rudolfrck.github.com/iscroll-stickyheaders/
+
+Usage:
 ``` js
 var scroll = new iScroll('scroll-element');
 scroll.enableStickyHeaders('h1');
