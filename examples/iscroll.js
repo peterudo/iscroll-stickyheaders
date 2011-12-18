@@ -18,7 +18,7 @@ var m = Math,
     has3d = 'WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix(),
     hasTouch = 'ontouchstart' in window && !isTouchPad,
     hasTransform = vendor + 'Transform' in document.documentElement.style,
-    hasTransitionEnd = true,
+    hasTransitionEnd = 'ontransitionend' in window || 'on' + vendor + 'transitionend' in window,
 
     nextFrame = (function() {
         return window.requestAnimationFrame
