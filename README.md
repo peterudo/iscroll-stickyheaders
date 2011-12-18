@@ -1,7 +1,7 @@
 iScroll sticky headers
 ======================
 
-Plugin for ([iScroll](http://cubiq.org/iscroll-4)) that adds support for sticky headers.
+Plugin for [iScroll](http://cubiq.org/iscroll-4) that adds support for sticky headers.
 
 
 ## Usage
