@@ -67,6 +67,8 @@
 
                 this.headers.push(header);
             }
+
+            this._position();
         },
 
         _position: function () {
