@@ -1,3 +1,9 @@
+/**
+ * iscroll.stickyheaders.js
+ * (c) 2011 Peter Rudolfsen
+ * May be freely distributed under the MIT license.
+ */
+
 (function(iScroll) {
 
     var _transitionTime = iScroll.prototype._transitionTime,
@@ -67,6 +73,8 @@
 
                 this.headers.push(header);
             }
+
+            this._position();
         },
 
         _position: function () {
