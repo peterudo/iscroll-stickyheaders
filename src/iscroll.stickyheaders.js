@@ -1,3 +1,9 @@
+/**
+ * iscroll.stickyheaders.js
+ * (c) 2011 Peter Rudolfsen
+ * May be freely distributed under the MIT license.
+ */
+
 (function(iScroll) {
 
     var _transitionTime = iScroll.prototype._transitionTime,
