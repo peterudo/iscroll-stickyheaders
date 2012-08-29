@@ -1,6 +1,6 @@
 /**
  * iscroll.stickyheaders.js
- * (c) 2011 Peter Rudolfsen
+ * (c) 2011-2012 Peter Rudolfsen
  * May be freely distributed under the MIT license.
  */
 
@@ -17,7 +17,7 @@
         has3d = 'WebKitCSSMatrix' in window && 'm11' in new WebKitCSSMatrix(),
         trnOpen = 'translate' + (has3d ? '3d(' : '('),
         trnClose = has3d ? ',0)' : ')';
-    
+
     iScroll.prototype.enableStickyHeaders = function (selector) {
         return new iScrollStickyHeaders(this, selector);
     };
@@ -31,10 +31,10 @@
         this.selector = selector;
 
         this.initialize();
-    }
+    };
 
     iScrollStickyHeaders.prototype = {
-        
+
         headers: [],
 
         initialize: function () {
@@ -78,12 +78,12 @@
         },
 
         _position: function () {
-            var roundedAbsY = m.round(m.abs(this.iscroll.y)),
+            var absY = m.abs(this.iscroll.y),
                 preventTranslate = this.iscroll.y > 0;
 
             for (var i = 0, ii = this.headers.length; i < ii; i++) {
                 var header = this.headers[i],
-                    translateY = roundedAbsY - header.minY;
+                    translateY = absY - header.minY;
 
                 if (preventTranslate || translateY < 0) {
                     translateY = 0;
@@ -113,7 +113,7 @@
             this.iscroll._transitionTime = function (time) {
                 _transitionTime.apply(this, [].slice.call(arguments));
                 that._transition(time);
-            };            
+            };
         }
 
     };
