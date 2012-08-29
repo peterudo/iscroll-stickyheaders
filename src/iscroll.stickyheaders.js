@@ -78,12 +78,12 @@
         },
 
         _position: function () {
-            var roundedAbsY = m.round(m.abs(this.iscroll.y)),
+            var absY = m.abs(this.iscroll.y),
                 preventTranslate = this.iscroll.y > 0;
 
             for (var i = 0, ii = this.headers.length; i < ii; i++) {
                 var header = this.headers[i],
-                    translateY = roundedAbsY - header.minY;
+                    translateY = absY - header.minY;
 
                 if (preventTranslate || translateY < 0) {
                     translateY = 0;
