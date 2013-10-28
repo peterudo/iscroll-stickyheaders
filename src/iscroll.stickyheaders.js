@@ -6,9 +6,7 @@
 
 (function(iScroll) {
 
-    var _transitionTime = iScroll.prototype._transitionTime,
-        _translate = iScroll.prototype._translate,
-        m = Math,
+    var m = Math,
 
         // Hoping iscroll gets easier to extend, so this can be skipped.
         vendor = (/webkit/i).test(navigator.appVersion) ? 'webkit' :
@@ -63,14 +61,10 @@
                     },
                     prevHeader = this.headers[i - 1];
 
+
                 if (prevHeader) {
                     prevHeader.maxY = m.abs(prevHeader.maxY - header.minY);
                 }
-
-                header.elm.style[vendor + 'TransitionTimingFunction'] = 'cubic-bezier(.33, .66, .66, 1)';
-                header.elm.style[vendor + 'TransitionProperty'] = '-' + vendor.toLowerCase() + '-transform';
-                header.elm.style[vendor + 'TransitionDuration'] = '0';
-                header.elm.style[vendor + 'TransformOrigin'] = '0 0';
 
                 this.headers.push(header);
             }
@@ -78,9 +72,9 @@
             this._translate();
         },
 
-        _translate: function () {
-            var absY = m.abs(this.iscroll.y),
-                preventTranslate = this.iscroll.y > 0;
+        _translate: function (x, y) {
+            var absY = m.abs(y),
+                preventTranslate = y > 0;
 
             for (var i = 0, ii = this.headers.length; i < ii; i++) {
                 var header = this.headers[i],
@@ -89,32 +83,22 @@
                 if (preventTranslate || translateY < 0) {
                     translateY = 0;
                 } else if (translateY > header.maxY) {
-                    // Make sure it never exceeds it's max allowed position
-                    translateY = header.maxY;
+                    // Skip the check for the last section head because there is now max allowed position
+                    if (i + 1 !== ii)
+                        // Make sure it never exceeds it's max allowed position
+                        translateY = header.maxY;
                 }
 
                 header.elm.style[vendor + 'Transform'] = trnOpen + ('0, ' + translateY + 'px') + trnClose;
             }
         },
 
-        _transition: function (time) {
-            for (var i = 0, ii = this.headers.length; i < ii; i++) {
-                this.headers[i].elm.style[vendor + 'TransitionDuration'] = time + 'ms';
-            }
-        },
-
         _augment: function () {
             var that = this;
 
-            this.iscroll._translate = function () {
-                _translate.apply(this, [].slice.call(arguments));
-                that._translate();
-            };
-
-            this.iscroll._transitionTime = function (time) {
-                _transitionTime.apply(this, [].slice.call(arguments));
-                that._transition(time);
-            };
+            this.iscroll.on('scroll', function() {
+                that._translate(this.x, this.y)
+            });
         }
 
     };
