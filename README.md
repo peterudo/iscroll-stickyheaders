@@ -10,7 +10,7 @@ Working demo: http://rudolfrck.github.com/iscroll-stickyheaders/
 Usage:
 
 ``` js
-var scroll = new IScroll('#scroll-element');
+var scroll = new IScroll('#scroll-element', { probeType: 3 });
 scroll.enableStickyHeaders('h1');
 ```
 
