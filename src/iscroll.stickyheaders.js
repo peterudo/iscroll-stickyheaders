@@ -7,7 +7,7 @@
 (function(iScroll) {
 
     var _transitionTime = iScroll.prototype._transitionTime,
-        _pos = iScroll.prototype._pos,
+        _translate = iScroll.prototype._translate,
         m = Math,
 
         // Hoping iscroll gets easier to extend, so this can be skipped.
@@ -42,10 +42,11 @@
 
             this._augment();
 
-            this.iscroll.options.onRefresh = function () {
-                that.refresh();
-            };
-            this.iscroll.refresh();
+            this.iscroll.on('refresh', function() {
+                that.refresh()
+            });
+
+            this.iscroll.refresh()
         },
 
         refresh: function () {
@@ -74,10 +75,10 @@
                 this.headers.push(header);
             }
 
-            this._position();
+            this._translate();
         },
 
-        _position: function () {
+        _translate: function () {
             var absY = m.abs(this.iscroll.y),
                 preventTranslate = this.iscroll.y > 0;
 
@@ -105,9 +106,9 @@
         _augment: function () {
             var that = this;
 
-            this.iscroll._pos = function () {
-                _pos.apply(this, [].slice.call(arguments));
-                that._position();
+            this.iscroll._translate = function () {
+                _translate.apply(this, [].slice.call(arguments));
+                that._translate();
             };
 
             this.iscroll._transitionTime = function (time) {
@@ -118,4 +119,4 @@
 
     };
 
-}(window.iScroll));
+}(window.IScroll));
