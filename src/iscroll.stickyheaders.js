@@ -6,9 +6,7 @@
 
 (function(iScroll) {
 
-    var _transitionTime = iScroll.prototype._transitionTime,
-        _pos = iScroll.prototype._pos,
-        m = Math,
+    var m = Math,
 
         // Hoping iscroll gets easier to extend, so this can be skipped.
         vendor = (/webkit/i).test(navigator.appVersion) ? 'webkit' :
@@ -42,10 +40,11 @@
 
             this._augment();
 
-            this.iscroll.options.onRefresh = function () {
-                that.refresh();
-            };
-            this.iscroll.refresh();
+            this.iscroll.on('refresh', function() {
+                that.refresh()
+            });
+
+            this.iscroll.refresh()
         },
 
         refresh: function () {
@@ -62,24 +61,20 @@
                     },
                     prevHeader = this.headers[i - 1];
 
+
                 if (prevHeader) {
                     prevHeader.maxY = m.abs(prevHeader.maxY - header.minY);
                 }
 
-                header.elm.style[vendor + 'TransitionTimingFunction'] = 'cubic-bezier(.33, .66, .66, 1)';
-                header.elm.style[vendor + 'TransitionProperty'] = '-' + vendor.toLowerCase() + '-transform';
-                header.elm.style[vendor + 'TransitionDuration'] = '0';
-                header.elm.style[vendor + 'TransformOrigin'] = '0 0';
-
                 this.headers.push(header);
             }
 
-            this._position();
+            this._translate();
         },
 
-        _position: function () {
-            var absY = m.abs(this.iscroll.y),
-                preventTranslate = this.iscroll.y > 0;
+        _translate: function (x, y) {
+            var absY = m.abs(y),
+                preventTranslate = y > 0;
 
             for (var i = 0, ii = this.headers.length; i < ii; i++) {
                 var header = this.headers[i],
@@ -88,34 +83,24 @@
                 if (preventTranslate || translateY < 0) {
                     translateY = 0;
                 } else if (translateY > header.maxY) {
-                    // Make sure it never exceeds it's max allowed position
-                    translateY = header.maxY;
+                    // Skip the check for the last section head because there is now max allowed position
+                    if (i + 1 !== ii)
+                        // Make sure it never exceeds it's max allowed position
+                        translateY = header.maxY;
                 }
 
                 header.elm.style[vendor + 'Transform'] = trnOpen + ('0, ' + translateY + 'px') + trnClose;
             }
         },
 
-        _transition: function (time) {
-            for (var i = 0, ii = this.headers.length; i < ii; i++) {
-                this.headers[i].elm.style[vendor + 'TransitionDuration'] = time + 'ms';
-            }
-        },
-
         _augment: function () {
             var that = this;
 
-            this.iscroll._pos = function () {
-                _pos.apply(this, [].slice.call(arguments));
-                that._position();
-            };
-
-            this.iscroll._transitionTime = function (time) {
-                _transitionTime.apply(this, [].slice.call(arguments));
-                that._transition(time);
-            };
+            this.iscroll.on('scroll', function() {
+                that._translate(this.x, this.y)
+            });
         }
 
     };
 
-}(window.iScroll));
+}(window.IScroll));
