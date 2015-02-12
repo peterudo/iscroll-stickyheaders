@@ -16,17 +16,18 @@
         trnOpen = 'translate' + (has3d ? '3d(' : '('),
         trnClose = has3d ? ',0)' : ')';
 
-    iScroll.prototype.enableStickyHeaders = function (selector) {
-        return new iScrollStickyHeaders(this, selector);
+    iScroll.prototype.enableStickyHeaders = function (selector, offset) {
+        return new iScrollStickyHeaders(this, selector, offset);
     };
 
-    var iScrollStickyHeaders = function (iscroll, selector) {
+    var iScrollStickyHeaders = function (iscroll, selector, offset) {
         if (!iscroll.options.useTransform) {
             return;
         }
 
         this.iscroll = iscroll;
         this.selector = selector;
+        this.offset = offset;
 
         this.initialize();
     };
@@ -54,12 +55,21 @@
             this.headers = [];
 
             for (i = 0, ii = elms.length; i < ii; i++) {
-                var header = {
-                        elm: elms[i],
-                        minY: elms[i].offsetTop,
-                        maxY: elms[i].offsetHeight + elms[i].offsetTop
-                    },
-                    prevHeader = this.headers[i - 1];
+                if (this.offset) {
+		            var header = {
+	                        elm: elms[i],
+	                        minY: elms[i].offsetTop - this.offset,
+	                        maxY: elms[i].offsetHeight + elms[i].offsetTop - this.offset
+	                    },
+	                    prevHeader = this.headers[i - 1];
+	            } else {
+	                var header = {
+	                        elm: elms[i],
+	                        minY: elms[i].offsetTop,
+	                        maxY: elms[i].offsetHeight + elms[i].offsetTop
+	                    },
+	                    prevHeader = this.headers[i - 1];
+				}
 
 
                 if (prevHeader) {
